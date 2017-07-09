@@ -16,7 +16,7 @@ INCLUDE = \
     -I ../njd_set_long_vowel \
     -I ../njd2jpcommon \
     -I ../jpcommon \
-    -I ../../hts_engine_API/include
+    -I ../hts_engine_API/include
 LIBS = \
     ../text2mecab/libtext2mecab.a \
     ../mecab/src/libmecab.a \
@@ -30,7 +30,7 @@ LIBS = \
     ../njd_set_long_vowel/libnjd_set_long_vowel.a \
     ../njd2jpcommon/libnjd2jpcommon.a \
     ../jpcommon/libjpcommon.a \
-    ../../hts_engine_API/lib/libHTSEngine.a
+    ../hts_engine_API/lib/libHTSEngine.a
 
 all: libobj
 

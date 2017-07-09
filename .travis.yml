@@ -1,0 +1,23 @@
+language: generic
+os:
+- osx
+- linux
+before_install:
+- "wget https://raw.githubusercontent.com/gp187/nginx-builder/master/fix/aclocal.sh"
+- "chmod +x aclocal.sh"
+- "[[ $TRAVIS_OS_NAME == 'linux' ]] && sudo bash ./aclocal.sh || :"
+# - "[[ $TRAVIS_OS_NAME == 'linux' ]] && sudo apt-get install autoconf automake libtool aclocal autoconf-doc libtool-doc || :"
+script:
+- chmod +x build_travis.sh
+- ". ./build_travis.sh"
+deploy:
+  provider: releases
+  api_key:
+    secure: OCKh6wzfZEW52m1Sx6DQxyOB1e5xs3yvp14lNmXu7KgZU3+vCUFQeG43Wrkox+VCpWHksiy+jDRx1pKB73d/jewUkakTrPdxt1Hi1wfoXp47U1+QfafkKLEhaMb08xckKK6Hmf9VFBwwyCq5DiBcA01PUARc2ufnIEdjkQ9vLuz3KC04HpLNZJRALVkbm70DcX+3/x/0RUUBMZhf+uffVBbqe/6MJPbi/XGNu6ecMlNPxUGP52CBCk/p8IJ73YQz4ggjjBl6iIao7Khou7R6QV88ACxhG8iZfPc7r29Ox/1FL7jne0ZT2JhiYtL6aoi54us4jH/IBT7hrTkr/blCTCkEd6EGN4WSIy/fVavTfT/zlsaUqULbe7+OLnPnY2j5rZRZuISfVOC9r0LdY/qrbM9NABPqeL8oQC8lIxGMAKtsnlliJ/drqLe2c/Zv0OMX6o0uMDIZ6x/aetdLhY1PPXpxH1uTBBNdv9gtnM/OrDNHuiK+echSNCUA8DOz4PFuF1EJbJrFXQx1oCfcTr45HZpj2t6I+MUHGnGpSTCx393t0JxTsW7oQWytrx0vk2PVWPldOV4xNENZ5u204GjWG+TCjSLIlQhDjsZw1v0yGl9oNL1g6GHRvC7KTntt9BE66l6HToIrOFQ/2sccv34AWf/owp47sIfjnQDB6uIOLcE=
+  file_glob: true
+  file: "libopenjtalk.{so,dylib}"
+  on:
+    repo: yamachu/LibOpenJTalk
+    branch: feature/library
+    tags: true
+  skip_cleanup: true
