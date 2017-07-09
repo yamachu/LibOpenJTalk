@@ -31,3 +31,12 @@
 *.exe
 *.out
 *.app
+
+#
+.deps/
+Makefile
+/config.log
+/config.status
+mecab/config.h
+
+!library/Makefile
