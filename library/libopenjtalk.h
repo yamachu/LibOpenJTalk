@@ -23,7 +23,12 @@ typedef struct _Open_JTalk {
 Open_JTalk* Open_JTalk_initialize();
 void Open_JTalk_clear(Open_JTalk **);
 int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab, char *fn_voice);
-int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt, const char *wav_file_path, const char *log_file_path);
+int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
+    const char *wav_file_path, const char *log_file_path);
+int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
+    const char *wav_file_path,
+    const char *text_anal_file_path,
+    const char *context_label_file_path);
 
 void Open_JTalk_set_sampling_frequency(Open_JTalk * open_jtalk, size_t i);
 void Open_JTalk_set_fperiod(Open_JTalk * open_jtalk, size_t i);
