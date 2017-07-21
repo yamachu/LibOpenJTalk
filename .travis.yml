@@ -3,6 +3,7 @@ os:
 - osx
 - linux
 before_install:
+- "[[ $TRAVIS_OS_NAME == 'linux' ]] && sudo apt-get install csh -y || :"
 - "wget https://raw.githubusercontent.com/gp187/nginx-builder/master/fix/aclocal.sh"
 - "chmod +x aclocal.sh"
 - "[[ $TRAVIS_OS_NAME == 'linux' ]] && sudo bash ./aclocal.sh || :"

@@ -230,3 +230,128 @@ int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
     return result;
 }
 
+#ifdef HAS_WORLD
+int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
+    const char *wav_file_path, const char *log_file_path)
+{
+    int result = 0;
+    char buff[MAXBUFLEN];
+    FILE *wavfp = NULL;
+    FILE *logfp = NULL;
+    if (wav_file_path != NULL) {
+        // Do Error Handling
+        wavfp = fopen(wav_file_path, "wb");
+    }
+    if (log_file_path != NULL) {
+        // Do Error Handling
+        logfp = fopen(log_file_path, "w");
+    }
+
+    text2mecab(buff, txt);
+    Mecab_analysis(&open_jtalk->mecab, buff);
+    mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
+        Mecab_get_size(&open_jtalk->mecab));
+    njd_set_pronunciation(&open_jtalk->njd);
+    njd_set_digit(&open_jtalk->njd);
+    njd_set_accent_phrase(&open_jtalk->njd);
+    njd_set_accent_type(&open_jtalk->njd);
+    njd_set_unvoiced_vowel(&open_jtalk->njd);
+    njd_set_long_vowel(&open_jtalk->njd);
+    njd2jpcommon(&open_jtalk->jpcommon, &open_jtalk->njd);
+    JPCommon_make_label(&open_jtalk->jpcommon);
+    if (JPCommon_get_label_size(&open_jtalk->jpcommon) > 2) {
+        if (HTS_Engine_synthesize_from_strings_WORLD
+            (&open_jtalk->engine, JPCommon_get_label_feature(&open_jtalk->jpcommon),
+            JPCommon_get_label_size(&open_jtalk->jpcommon)) == TRUE)
+            result = 1;
+        if (wavfp != NULL)
+            HTS_Engine_save_riff(&open_jtalk->engine, wavfp);
+        if (logfp != NULL) {
+            fprintf(logfp, "[Text analysis result]\n");
+            NJD_fprint(&open_jtalk->njd, logfp);
+            fprintf(logfp, "\n[Output label]\n");
+            HTS_Engine_save_label(&open_jtalk->engine, logfp);
+            fprintf(logfp, "\n");
+            HTS_Engine_save_information(&open_jtalk->engine, logfp);
+        }
+        HTS_Engine_refresh(&open_jtalk->engine);
+    }
+    JPCommon_refresh(&open_jtalk->jpcommon);
+    NJD_refresh(&open_jtalk->njd);
+    Mecab_refresh(&open_jtalk->mecab);
+
+    if (wavfp != NULL) {
+        fclose(wavfp);
+    }
+    if (logfp != NULL) {
+        fclose(logfp);
+    }
+
+    return result;
+}
+
+int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
+    const char *wav_file_path,
+    const char *text_anal_file_path,
+    const char *context_label_file_path)
+{
+    int result = 0;
+    char buff[MAXBUFLEN];
+    FILE *wavfp = NULL;
+    FILE *textfp = NULL;
+    FILE *contextfp = NULL;
+    if (wav_file_path != NULL) {
+        // Do Error Handling
+        wavfp = fopen(wav_file_path, "wb");
+    }
+    if (text_anal_file_path != NULL) {
+        // Do Error Handling
+        textfp = fopen(text_anal_file_path, "w");
+    }
+    if (context_label_file_path != NULL) {
+        // Do Error Handling
+        contextfp = fopen(context_label_file_path, "w");
+    }
+
+    text2mecab(buff, txt);
+    Mecab_analysis(&open_jtalk->mecab, buff);
+    mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
+        Mecab_get_size(&open_jtalk->mecab));
+    njd_set_pronunciation(&open_jtalk->njd);
+    njd_set_digit(&open_jtalk->njd);
+    njd_set_accent_phrase(&open_jtalk->njd);
+    njd_set_accent_type(&open_jtalk->njd);
+    njd_set_unvoiced_vowel(&open_jtalk->njd);
+    njd_set_long_vowel(&open_jtalk->njd);
+    njd2jpcommon(&open_jtalk->jpcommon, &open_jtalk->njd);
+    JPCommon_make_label(&open_jtalk->jpcommon);
+    if (JPCommon_get_label_size(&open_jtalk->jpcommon) > 2) {
+        if (HTS_Engine_synthesize_from_strings_WORLD
+            (&open_jtalk->engine, JPCommon_get_label_feature(&open_jtalk->jpcommon),
+            JPCommon_get_label_size(&open_jtalk->jpcommon)) == TRUE)
+            result = 1;
+        if (wavfp != NULL)
+            HTS_Engine_save_riff(&open_jtalk->engine, wavfp);
+        if (textfp != NULL)
+            NJD_fprint(&open_jtalk->njd, textfp);
+        if (contextfp != NULL)
+            HTS_Engine_save_label(&open_jtalk->engine, contextfp);
+        HTS_Engine_refresh(&open_jtalk->engine);
+    }
+    JPCommon_refresh(&open_jtalk->jpcommon);
+    NJD_refresh(&open_jtalk->njd);
+    Mecab_refresh(&open_jtalk->mecab);
+
+    if (wavfp != NULL) {
+        fclose(wavfp);
+    }
+    if (textfp != NULL) {
+        fclose(textfp);
+    }
+    if (contextfp != NULL) {
+        fclose(contextfp);
+    }
+
+    return result;
+}
+#endif

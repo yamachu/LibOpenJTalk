@@ -3,6 +3,8 @@
 # initialize hts_engine_API
 git clone https://github.com/yamachu/hts_engine_API.git
 pushd hts_engine_API
+chmod +x setup.sh
+./setup.sh
 ./configure
 make -j4
 popd
