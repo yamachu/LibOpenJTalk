@@ -230,7 +230,6 @@ int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
     return result;
 }
 
-#ifdef HAS_WORLD
 int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
     const char *wav_file_path, const char *log_file_path)
 {
@@ -354,4 +353,3 @@ int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
 
     return result;
 }
-#endif
