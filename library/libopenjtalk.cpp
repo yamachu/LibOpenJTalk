@@ -122,6 +122,7 @@ int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
         logfp = fopen(log_file_path, "w");
     }
 
+    HTS_Engine_refresh(&open_jtalk->engine);
     text2mecab(buff, txt);
     Mecab_analysis(&open_jtalk->mecab, buff);
     mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
@@ -149,7 +150,7 @@ int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
             fprintf(logfp, "\n");
             HTS_Engine_save_information(&open_jtalk->engine, logfp);
         }
-        HTS_Engine_refresh(&open_jtalk->engine);
+        HTS_Engine_weak_refresh(&open_jtalk->engine);
     }
     JPCommon_refresh(&open_jtalk->jpcommon);
     NJD_refresh(&open_jtalk->njd);
@@ -188,6 +189,7 @@ int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
         contextfp = fopen(context_label_file_path, "w");
     }
 
+    HTS_Engine_refresh(&open_jtalk->engine);
     text2mecab(buff, txt);
     Mecab_analysis(&open_jtalk->mecab, buff);
     mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
@@ -211,7 +213,7 @@ int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
             NJD_fprint(&open_jtalk->njd, textfp);
         if (contextfp != NULL)
             HTS_Engine_save_label(&open_jtalk->engine, contextfp);
-        HTS_Engine_refresh(&open_jtalk->engine);
+        HTS_Engine_weak_refresh(&open_jtalk->engine);
     }
     JPCommon_refresh(&open_jtalk->jpcommon);
     NJD_refresh(&open_jtalk->njd);
@@ -246,6 +248,7 @@ int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
         logfp = fopen(log_file_path, "w");
     }
 
+    HTS_Engine_refresh(&open_jtalk->engine);
     text2mecab(buff, txt);
     Mecab_analysis(&open_jtalk->mecab, buff);
     mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
@@ -273,7 +276,7 @@ int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
             fprintf(logfp, "\n");
             HTS_Engine_save_information(&open_jtalk->engine, logfp);
         }
-        HTS_Engine_refresh(&open_jtalk->engine);
+        HTS_Engine_weak_refresh(&open_jtalk->engine);
     }
     JPCommon_refresh(&open_jtalk->jpcommon);
     NJD_refresh(&open_jtalk->njd);
@@ -312,6 +315,7 @@ int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
         contextfp = fopen(context_label_file_path, "w");
     }
 
+    HTS_Engine_refresh(&open_jtalk->engine);
     text2mecab(buff, txt);
     Mecab_analysis(&open_jtalk->mecab, buff);
     mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
@@ -335,7 +339,7 @@ int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
             NJD_fprint(&open_jtalk->njd, textfp);
         if (contextfp != NULL)
             HTS_Engine_save_label(&open_jtalk->engine, contextfp);
-        HTS_Engine_refresh(&open_jtalk->engine);
+        HTS_Engine_weak_refresh(&open_jtalk->engine);
     }
     JPCommon_refresh(&open_jtalk->jpcommon);
     NJD_refresh(&open_jtalk->njd);
@@ -352,4 +356,70 @@ int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
     }
 
     return result;
+}
+
+int Open_JTalk_resynthesis(Open_JTalk * open_jtalk, const char *wav_file_path)
+{
+    int result = 0;
+    FILE *wavfp = NULL;
+
+    if (wav_file_path != NULL) {
+        // Do Error Handling
+        wavfp = fopen(wav_file_path, "wb");
+    }
+
+    if (HTS_Engine_resynthesize(&open_jtalk->engine) == TRUE)
+        result = 1;
+
+    if (wavfp != NULL)
+        HTS_Engine_save_riff(&open_jtalk->engine, wavfp);
+    
+    if (wavfp != NULL)
+        fclose(wavfp);
+
+    return result;
+}
+
+int Open_JTalk_resynthesis_WORLD(Open_JTalk * open_jtalk, const char *wav_file_path)
+{
+    int result = 0;
+    FILE *wavfp = NULL;
+
+    if (wav_file_path != NULL) {
+        // Do Error Handling
+        wavfp = fopen(wav_file_path, "wb");
+    }
+
+    if (HTS_Engine_resynthesize_WORLD(&open_jtalk->engine) == TRUE)
+        result = 1;
+
+    if (wavfp != NULL)
+        HTS_Engine_save_riff(&open_jtalk->engine, wavfp);
+    
+    if (wavfp != NULL)
+        fclose(wavfp);
+
+    return result;
+}
+
+int Open_JTalk_get_lf0_length(Open_JTalk * open_jtalk)
+{
+    return HTS_Engine_get_total_frame(&open_jtalk->engine);
+}
+
+void Open_JTalk_get_lf0_array(Open_JTalk * open_jtalk, double *lf0_buffer, size_t buffer_length)
+{
+    for (size_t i = 0; i < buffer_length; i++)
+        lf0_buffer[i] = HTS_Engine_get_generated_parameter(&open_jtalk->engine, 1 /* lf0 stream */, i, 0 /* lf0 is 1-dim */);
+}
+
+void Open_JTalk_set_lf0_array(Open_JTalk * open_jtalk, double *lf0_buffer, size_t buffer_length)
+{
+    for (size_t i = 0; i < buffer_length; i++)
+        open_jtalk->engine.gss.gstream[1].par[i][0] = lf0_buffer[i];
+}
+
+void Open_JTalk_set_lf0(Open_JTalk * open_jtalk, double lf0, size_t frame_index)
+{
+    open_jtalk->engine.gss.gstream[1].par[frame_index][0] = lf0;
 }
