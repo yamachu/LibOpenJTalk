@@ -1,5 +1,8 @@
 build_script:
-  - ./build_windows.bat
+  - setup_windows.bat
+  - cd C:\projects\libopenjtalk
+  - build_windows.bat
+  - echo Finished Build
 
 artifacts:
   - path: 'library\open_jtalk.dll'
