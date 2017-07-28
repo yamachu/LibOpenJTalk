@@ -1,0 +1,6 @@
+build_script:
+  - ./build_windows.bat
+
+artifacts:
+  - path: 'library\open_jtalk.dll'
+    name: open_jtalk

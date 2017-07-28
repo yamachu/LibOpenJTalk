@@ -38,6 +38,9 @@ all:
 	cd jpcommon
 	nmake /f Makefile.mak
 	cd ..
+	cd library
+	nmake /f Makefile.mak
+	cd ..
 	cd bin
 	nmake /f Makefile.mak
 	cd ..
