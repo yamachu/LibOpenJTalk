@@ -203,8 +203,8 @@ case "$host_os" in
       CXXFLAGS="-O3 -Wall -Wno-deprecated -D__CYGWIN__ $CXXFLAGS "
       ;;
    *)
-      CFLAGS="-O2 -Wall -g $CFLAGS"
-      CXXFLAGS="-O3 -Wall -Wno-deprecated $CXXFLAGS "
+      CFLAGS="-O2 -Wall -g -fPIC $CFLAGS"
+      CXXFLAGS="-O3 -Wall -fPIC -Wno-deprecated $CXXFLAGS "
       ;;
 esac
 fi
@@ -268,22 +268,22 @@ if test x$charset = xeucjp -o x$charset = xeuc-jp -o x$charset = xeuc_jp -o x$ch
    MECAB_DEFAULT_CHARSET="EUC-JP"
    MECAB_USE_UTF8_ONLY=""
    CHARSET="-D CHARSET_EUC_JP"
-   CFLAGS="$CFLAGS -finput-charset=EUC-JP -fexec-charset=EUC-JP "
-   CXXFLAGS="$CXXFLAGS -finput-charset=EUC-JP -fexec-charset=EUC-JP "
+   CFLAGS="$CFLAGS -fPIC -finput-charset=EUC-JP -fexec-charset=EUC-JP "
+   CXXFLAGS="$CXXFLAGS -fPIC -finput-charset=EUC-JP -fexec-charset=EUC-JP "
 elif test x$charset = xsjis -o x$charset = xshift-jis -o x$charset = xshift_jis -o x$charset = xSJIS -o x$charset = xSHIFT-JIS -o x$charset = xSHIFT_JIS ; then
    MECAB_CHARSET=SHIFT-JIS
    MECAB_DEFAULT_CHARSET="SHIFT-JIS"
    MECAB_USE_UTF8_ONLY=""
    CHARSET="-D CHARSET_SHIFT_JIS"
-   CFLAGS="$CFLAGS -finput-charset=cp932 -fexec-charset=cp932 "
-   CXXFLAGS="$CXXFLAGS -finput-charset=cp932 -fexec-charset=cp932 "
+   CFLAGS="$CFLAGS -fPIC -finput-charset=cp932 -fexec-charset=cp932 "
+   CXXFLAGS="$CXXFLAGS -fPIC -finput-charset=cp932 -fexec-charset=cp932 "
 elif test x$charset = xutf8 -o x$charset = xutf-8 -o x$charset = xutf_8 -o x$charset = xUTF8 -o x$charset = xUTF-8 -o x$charset = xUTF_8 ; then
    MECAB_CHARSET=UTF-8
    MECAB_DEFAULT_CHARSET="UTF-8"
    MECAB_USE_UTF8_ONLY="-D MECAB_USE_UTF8_ONLY"
    CHARSET="-D CHARSET_UTF_8"
-   CFLAGS="$CFLAGS -finput-charset=UTF-8 -fexec-charset=UTF-8 "
-   CXXFLAGS="$CXXFLAGS -finput-charset=UTF-8 -fexec-charset=UTF-8 "
+   CFLAGS="$CFLAGS -fPIC -finput-charset=UTF-8 -fexec-charset=UTF-8 "
+   CXXFLAGS="$CXXFLAGS -fPIC -finput-charset=UTF-8 -fexec-charset=UTF-8 "
 else
    AC_MSG_ERROR(Cannot recognize $charset)
 fi

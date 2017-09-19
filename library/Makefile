@@ -1,6 +1,6 @@
 CXX = g++
 LINK = g++
-CXXFLAGS = -O2 -Wall -fPIC -finput-charset=UTF-8 -fexec-charset=UTF-8
+CXXFLAGS = -O2 -Wall -finput-charset=UTF-8 -fexec-charset=UTF-8
 LDFLAGS = -lstdc++ -lm
 INCLUDE = \
     -I ../mecab \
@@ -37,7 +37,7 @@ all: libobj
 libobj: libopenjtalk.o
 
 libopenjtalk.o: libopenjtalk.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDE) -D CHARSET_UTF_8 -DHAVE_COINFIG_H -o "$@" -c "$<"
+	$(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -D CHARSET_UTF_8 -DHAVE_COINFIG_H -o "$@" -c "$<"
 
 mac_shared: libopenjtalk.dylib
 
@@ -47,7 +47,7 @@ libopenjtalk.dylib: libopenjtalk.o
 linux_shared: libopenjtalk.so
 
 libopenjtalk.so: libopenjtalk.o
-	$(LINK) $(CXXFLAGS) $(LDFLAGS) $(LIBS) -shared -o "$@" "$<"
+	$(LINK) $(CXXFLAGS) $(LDFLAGS) -Wl,--whole-archive $(LIBS) -shared -o "$@" "$<" -Wl,--no-whole-archive
 
 clean:
 	$(RM) libopenjtalk.o
