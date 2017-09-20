@@ -1,3 +1,8 @@
+environment:
+  matrix:
+    - ARCH: "x86"
+    - ARCH: "x64"
+
 build_script:
   - setup_windows.bat
   - cd C:\projects\libopenjtalk
@@ -5,14 +10,16 @@ build_script:
   - echo Finished Build
 
 artifacts:
-  - path: 'library\open_jtalk.dll'
-    name: open_jtalk
+  - path: 'library\x86_open_jtalk.dll'
+    name: x86_open_jtalk
+  - path: 'library\x64_open_jtalk.dll'
+    name: x64_open_jtalk
 
 deploy:
   provider: GitHub
   auth_token:
     secure: "phbIUL1pW4otTYZTo79JgBo7dznsGhCGU3Jbs8jLhM482kySCkP2oXWofXKMPqtc"
-  artifact: 'library\open_jtalk.dll'
+  artifact: 'library\*open_jtalk.dll'
   on:
     appveyor_repo_tag: true
   force_update: true
