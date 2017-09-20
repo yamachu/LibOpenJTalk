@@ -9,5 +9,6 @@ if %ARCH% == x86 (
 nmake /f Makefile.mak
 
 ren library\open_jtalk.dll %ARCH%_open_jtalk.dll
+cp library\%ARCH%_open_jtalk.dll %ARCH%_open_jtalk.dll
 
 echo Finish OpenJTalk library build task

@@ -19,7 +19,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: "phbIUL1pW4otTYZTo79JgBo7dznsGhCGU3Jbs8jLhM482kySCkP2oXWofXKMPqtc"
-  artifact: 'library\*open_jtalk.dll'
+  artifact: /.*open_jtalk.dll/
   on:
     appveyor_repo_tag: true
   force_update: true
