@@ -47,7 +47,7 @@ libopenjtalk.dylib: libopenjtalk.o
 linux_shared: libopenjtalk.so
 
 libopenjtalk.so: libopenjtalk.o
-	$(LINK) $(CXXFLAGS) $(LDFLAGS) -Wl,--whole-archive $(LIBS) -shared -o "$@" "$<" -Wl,--no-whole-archive
+	$(LINK) $(CXXFLAGS) $(LDFLAGS) -Wl,--start-group $(LIBS) -Wl,--end-group -shared -o "$@" "$<"
 
 clean:
 	$(RM) libopenjtalk.o
