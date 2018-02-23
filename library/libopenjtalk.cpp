@@ -106,6 +106,46 @@ void Open_JTalk_set_audio_buff_size(Open_JTalk * open_jtalk, size_t i)
     HTS_Engine_set_audio_buff_size(&open_jtalk->engine, i);
 }
 
+void Open_JTalk_destroy_buffer(Open_JTalk * open_jtalk, short ** data)
+{
+    HTS_Engine_free_generated_speech(&open_jtalk->engine, data);
+}
+
+int Open_JTalk_synthesis_buffer(Open_JTalk * open_jtalk, const char *txt,
+    short ** data)
+{
+    int result = 0;
+    char buff[MAXBUFLEN];
+
+    HTS_Engine_refresh(&open_jtalk->engine);
+    text2mecab(buff, txt);
+    Mecab_analysis(&open_jtalk->mecab, buff);
+    mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
+        Mecab_get_size(&open_jtalk->mecab));
+    njd_set_pronunciation(&open_jtalk->njd);
+    njd_set_digit(&open_jtalk->njd);
+    njd_set_accent_phrase(&open_jtalk->njd);
+    njd_set_accent_type(&open_jtalk->njd);
+    njd_set_unvoiced_vowel(&open_jtalk->njd);
+    njd_set_long_vowel(&open_jtalk->njd);
+    njd2jpcommon(&open_jtalk->jpcommon, &open_jtalk->njd);
+    JPCommon_make_label(&open_jtalk->jpcommon);
+    if (JPCommon_get_label_size(&open_jtalk->jpcommon) > 2) {
+        if (HTS_Engine_synthesize_from_strings
+            (&open_jtalk->engine, JPCommon_get_label_feature(&open_jtalk->jpcommon),
+            JPCommon_get_label_size(&open_jtalk->jpcommon)) == TRUE)
+            result = 1;
+        if (data != NULL && result == 1)
+            result = HTS_Engine_allocate_generated_speech(&open_jtalk->engine, data);
+        HTS_Engine_weak_refresh(&open_jtalk->engine);
+    }
+    JPCommon_refresh(&open_jtalk->jpcommon);
+    NJD_refresh(&open_jtalk->njd);
+    Mecab_refresh(&open_jtalk->mecab);
+
+    return result;
+}
+
 int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
     const char *wav_file_path, const char *log_file_path)
 {
@@ -228,6 +268,41 @@ int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
     if (contextfp != NULL) {
         fclose(contextfp);
     }
+
+    return result;
+}
+
+int Open_JTalk_synthesis_buffer_WORLD(Open_JTalk * open_jtalk, const char *txt,
+    short ** data)
+{
+    int result = 0;
+    char buff[MAXBUFLEN];
+
+    HTS_Engine_refresh(&open_jtalk->engine);
+    text2mecab(buff, txt);
+    Mecab_analysis(&open_jtalk->mecab, buff);
+    mecab2njd(&open_jtalk->njd, Mecab_get_feature(&open_jtalk->mecab),
+        Mecab_get_size(&open_jtalk->mecab));
+    njd_set_pronunciation(&open_jtalk->njd);
+    njd_set_digit(&open_jtalk->njd);
+    njd_set_accent_phrase(&open_jtalk->njd);
+    njd_set_accent_type(&open_jtalk->njd);
+    njd_set_unvoiced_vowel(&open_jtalk->njd);
+    njd_set_long_vowel(&open_jtalk->njd);
+    njd2jpcommon(&open_jtalk->jpcommon, &open_jtalk->njd);
+    JPCommon_make_label(&open_jtalk->jpcommon);
+    if (JPCommon_get_label_size(&open_jtalk->jpcommon) > 2) {
+        if (HTS_Engine_synthesize_from_strings_WORLD
+            (&open_jtalk->engine, JPCommon_get_label_feature(&open_jtalk->jpcommon),
+            JPCommon_get_label_size(&open_jtalk->jpcommon)) == TRUE)
+            result = 1;
+        if (data != NULL && result == 1)
+            result = HTS_Engine_allocate_generated_speech(&open_jtalk->engine, data);
+        HTS_Engine_weak_refresh(&open_jtalk->engine);
+    }
+    JPCommon_refresh(&open_jtalk->jpcommon);
+    NJD_refresh(&open_jtalk->njd);
+    Mecab_refresh(&open_jtalk->mecab);
 
     return result;
 }
@@ -358,6 +433,19 @@ int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
     return result;
 }
 
+int Open_JTalk_resynthesis_buffer(Open_JTalk * open_jtalk, short ** data)
+{
+    int result = 0;
+
+    if (HTS_Engine_resynthesize(&open_jtalk->engine) == TRUE)
+        result = 1;
+
+    if (data != NULL && result == 1)
+        result = HTS_Engine_allocate_generated_speech(&open_jtalk->engine, data);
+    
+    return result;
+}
+
 int Open_JTalk_resynthesis(Open_JTalk * open_jtalk, const char *wav_file_path)
 {
     int result = 0;
@@ -376,6 +464,19 @@ int Open_JTalk_resynthesis(Open_JTalk * open_jtalk, const char *wav_file_path)
     
     if (wavfp != NULL)
         fclose(wavfp);
+
+    return result;
+}
+
+int Open_JTalk_resynthesis_buffer_WORLD(Open_JTalk * open_jtalk, short ** data)
+{
+    int result = 0;
+
+    if (HTS_Engine_resynthesize_WORLD(&open_jtalk->engine) == TRUE)
+        result = 1;
+
+    if (data != NULL && result == 1)
+        result = HTS_Engine_allocate_generated_speech(&open_jtalk->engine, data);
 
     return result;
 }
