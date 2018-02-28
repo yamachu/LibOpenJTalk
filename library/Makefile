@@ -38,7 +38,7 @@ all: libobj
 libobj: libopenjtalk.o
 
 libopenjtalk.o: libopenjtalk.cpp
-	$(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -D CHARSET_UTF_8 -DHAVE_COINFIG_H -o "$@" -c "$<"
+	$(CXX) $(CXXFLAGS) -fPIC $(INCLUDE) -D CHARSET_UTF_8 -DHAVE_COINFIG_H -o "$@" -c "$<" --std=c++11
 
 mac_shared: libopenjtalk.dylib
 
