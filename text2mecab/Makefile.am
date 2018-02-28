@@ -5,7 +5,7 @@ DISTCLEANFILES = *.log *.out *~
 
 MAINTAINERCLEANFILES = Makefile.in
 
-AM_CPPFLAGS = @CHARSET@
+AM_CPPFLAGS = @CHARSET@ -D ASCII_HEADER
 
 noinst_LIBRARIES = libtext2mecab.a
 

@@ -5,7 +5,7 @@ DISTCLEANFILES = *.log *.out *~
 
 MAINTAINERCLEANFILES = Makefile.in
 
-AM_CPPFLAGS = -I @top_srcdir@/njd @CHARSET@
+AM_CPPFLAGS = -I @top_srcdir@/njd @CHARSET@ -D ASCII_HEADER
 
 noinst_LIBRARIES = libnjd_set_digit.a
 
