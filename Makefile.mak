@@ -41,12 +41,6 @@ all:
 	cd library
 	nmake /f Makefile.mak
 	cd ..
-	cd bin
-	nmake /f Makefile.mak
-	cd ..
-	cd mecab-naist-jdic
-	nmake /f Makefile.mak
-	cd ..
 
 clean:
 	cd text2mecab
