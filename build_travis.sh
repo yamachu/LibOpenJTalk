@@ -9,6 +9,9 @@ chmod +x setup.sh
 make -j4
 popd
 
+# clone UTF8-CPP
+git clone https://github.com/nemtrif/utfcpp.git
+
 # build OpenJTalk
 ./configure --with-hts-engine-header-path=`pwd`/hts_engine_API/include --with-hts-engine-library-path=`pwd`/hts_engine_API/lib --with-charset=UTF-8
 make -j4 || : # osx build failed?

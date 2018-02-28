@@ -16,7 +16,8 @@ INCLUDE = \
     -I ../njd_set_long_vowel \
     -I ../njd2jpcommon \
     -I ../jpcommon \
-    -I ../hts_engine_API/include
+    -I ../hts_engine_API/include \
+    -I ../utfcpp/source
 LIBS = \
     ../text2mecab/libtext2mecab.a \
     ../mecab/src/libmecab.a \

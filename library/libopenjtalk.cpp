@@ -3,8 +3,6 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
-#include <locale> 
-#include <codecvt> 
 
 #include "libopenjtalk.h"
 
@@ -18,28 +16,20 @@
 #include "njd_set_long_vowel.h"
 #include "njd2jpcommon.h"
 
+#include <fstream>
+#include "utf8.h"
+
 namespace
 {
-// https://gist.github.com/gchudnov/c1ba72d45e394180e22f
-// https://stackoverflow.com/questions/32055357/visual-studio-c-2015-stdcodecvt-with-char16-t-or-char32-t
-#if _MSC_VER >= 1900
 std::string conv_u16_u8(char16_t* org_u16)
 {
     std::u16string source(org_u16);
-    std::wstring_convert<std::codecvt_utf8_utf16<int16_t>,int16_t> convert;
+    std::string utf8string; 
 
-    auto p = reinterpret_cast<const int16_t *>(source.data());
-    return convert.to_bytes(p, p + source.size());
-}
-#else
-std::string conv_u16_u8(char16_t* org_u16)
-{
-    std::u16string source(org_u16);
-    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>,char16_t> convert;
+    utf8::utf16to8(source.begin(), source.end(), std::back_inserter(utf8string));
 
-    return convert.to_bytes(source);
+    return utf8string;
 }
-#endif
 }
 
 Open_JTalk* Open_JTalk_initialize()
