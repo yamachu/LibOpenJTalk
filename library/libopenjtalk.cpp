@@ -3,6 +3,8 @@
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
+#include <locale> 
+#include <codecvt> 
 
 #include "libopenjtalk.h"
 
@@ -16,6 +18,17 @@
 #include "njd_set_long_vowel.h"
 #include "njd2jpcommon.h"
 
+namespace
+{
+// https://gist.github.com/gchudnov/c1ba72d45e394180e22f
+std::string conv_u16_u8(char16_t* org_u16)
+{
+    std::u16string source(org_u16);
+    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>,char16_t> convert;
+
+    return convert.to_bytes(source);
+}
+}
 
 Open_JTalk* Open_JTalk_initialize()
 {
@@ -54,6 +67,18 @@ int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab, char *fn_voice)
         return 0;
     }
     return 1;
+}
+
+int Open_JTalk_load_u16(Open_JTalk * open_jtalk, char16_t *dn_mecab, char16_t *fn_voice)
+{
+    std::string mecab_str = conv_u16_u8(dn_mecab);
+    const char *mecab_str_c = mecab_str.c_str();
+    char *mecab = const_cast<char*>(mecab_str_c);
+    std::string voice_str = conv_u16_u8(fn_voice);
+    const char *voice_str_c = voice_str.c_str();
+    char *voice = const_cast<char*>(voice_str_c);
+
+    return Open_JTalk_load(open_jtalk, mecab, voice);
 }
 
 void Open_JTalk_set_sampling_frequency(Open_JTalk * open_jtalk, size_t i)
@@ -146,6 +171,12 @@ int Open_JTalk_synthesis_buffer(Open_JTalk * open_jtalk, const char *txt,
     return result;
 }
 
+int Open_JTalk_synthesis_buffer_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    short ** data)
+{
+    return Open_JTalk_synthesis_buffer(open_jtalk, conv_u16_u8(txt).c_str(), data);
+}
+
 int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
     const char *wav_file_path, const char *log_file_path)
 {
@@ -204,6 +235,13 @@ int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
     }
 
     return result;
+}
+
+int Open_JTalk_synthesis_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    char16_t *wav_file_path, char16_t *log_file_path)
+{
+    return Open_JTalk_synthesis(open_jtalk, conv_u16_u8(txt).c_str(),
+        conv_u16_u8(wav_file_path).c_str(), conv_u16_u8(log_file_path).c_str());
 }
 
 int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
@@ -272,6 +310,16 @@ int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
     return result;
 }
 
+int Open_JTalk_synthesis_labels_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    char16_t *wav_file_path,
+    char16_t *text_anal_file_path,
+    char16_t *context_label_file_path)
+{
+    return Open_JTalk_synthesis_labels(open_jtalk, conv_u16_u8(txt).c_str(),
+    conv_u16_u8(wav_file_path).c_str(), conv_u16_u8(text_anal_file_path).c_str(),
+    conv_u16_u8(context_label_file_path).c_str());
+}
+
 int Open_JTalk_synthesis_buffer_WORLD(Open_JTalk * open_jtalk, const char *txt,
     short ** data)
 {
@@ -305,6 +353,12 @@ int Open_JTalk_synthesis_buffer_WORLD(Open_JTalk * open_jtalk, const char *txt,
     Mecab_refresh(&open_jtalk->mecab);
 
     return result;
+}
+
+int Open_JTalk_synthesis_buffer_WORLD_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    short ** data)
+{
+    return Open_JTalk_synthesis_buffer_WORLD(open_jtalk, conv_u16_u8(txt).c_str(), data);
 }
 
 int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
@@ -365,6 +419,13 @@ int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
     }
 
     return result;
+}
+
+int Open_JTalk_synthesis_WORLD_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    char16_t *wav_file_path, char16_t *log_file_path)
+{
+    return Open_JTalk_synthesis_WORLD(open_jtalk, conv_u16_u8(txt).c_str(),
+        conv_u16_u8(wav_file_path).c_str(), conv_u16_u8(log_file_path).c_str());
 }
 
 int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
@@ -433,6 +494,16 @@ int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
     return result;
 }
 
+int Open_JTalk_synthesis_labels_WORLD_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    char16_t *wav_file_path,
+    char16_t *text_anal_file_path,
+    char16_t *context_label_file_path)
+{
+    return Open_JTalk_synthesis_labels_WORLD(open_jtalk, conv_u16_u8(txt).c_str(),
+    conv_u16_u8(wav_file_path).c_str(), conv_u16_u8(text_anal_file_path).c_str(),
+    conv_u16_u8(context_label_file_path).c_str());
+}
+
 int Open_JTalk_resynthesis_buffer(Open_JTalk * open_jtalk, short ** data)
 {
     int result = 0;
@@ -468,6 +539,11 @@ int Open_JTalk_resynthesis(Open_JTalk * open_jtalk, const char *wav_file_path)
     return result;
 }
 
+int Open_JTalk_resynthesis_u16(Open_JTalk * open_jtalk, char16_t *wav_file_path)
+{
+    return Open_JTalk_resynthesis(open_jtalk, conv_u16_u8(wav_file_path).c_str());
+}
+
 int Open_JTalk_resynthesis_buffer_WORLD(Open_JTalk * open_jtalk, short ** data)
 {
     int result = 0;
@@ -501,6 +577,11 @@ int Open_JTalk_resynthesis_WORLD(Open_JTalk * open_jtalk, const char *wav_file_p
         fclose(wavfp);
 
     return result;
+}
+
+int Open_JTalk_resynthesis_WORLD_u16(Open_JTalk * open_jtalk, char16_t *wav_file_path)
+{
+    return Open_JTalk_resynthesis_WORLD(open_jtalk, conv_u16_u8(wav_file_path).c_str());
 }
 
 int Open_JTalk_get_lf0_length(Open_JTalk * open_jtalk)
