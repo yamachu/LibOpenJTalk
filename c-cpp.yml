@@ -1,0 +1,21 @@
+name: C/C++ CI
+
+on: [push]
+
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: git submodule update --init
+    - run: chmod +x hts_engine_API/setup.sh
+    - run: cd hts_engine_API && ./setup.sh; ./configure; make -j4
+    - run: ./configure --with-hts-engine-header-path=`pwd`/hts_engine_API/include --with-hts-engine-library-path=`pwd`/hts_engine_API/lib --with-charset=UTF-8
+    - run: make -j4
+    - run: make -C library mac_shared
+    
+
+    
