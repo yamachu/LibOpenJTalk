@@ -33,6 +33,10 @@ int Open_JTalk_synthesis(Open_JTalk * open_jtalk, const char *txt,
     const char *wav_file_path, const char *log_file_path);
 int Open_JTalk_synthesis_u16(Open_JTalk * open_jtalk, char16_t *txt,
     char16_t *wav_file_path, char16_t *log_file_path);
+int Open_JTalk_extract_label(Open_JTalk * open_jtalk, const char *txt,
+    char **labels, int *labelLength);
+int Open_JTalk_extract_label_u16(Open_JTalk * open_jtalk, char16_t *txt,
+    char **labels, int *labelLength);
 int Open_JTalk_synthesis_labels(Open_JTalk * open_jtalk, const char *txt,
     const char *wav_file_path,
     const char *text_anal_file_path,
