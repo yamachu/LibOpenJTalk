@@ -38,3 +38,5 @@ EXPORTS
 	Open_JTalk_set_lf0 @35
 	Open_JTalk_get_lf0_length @36
 	Open_JTalk_get_lf0_array @37
+	Open_JTalk_extract_label @38
+	Open_JTalk_extract_label_u16 @39
