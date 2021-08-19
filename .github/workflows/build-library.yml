@@ -19,3 +19,23 @@ jobs:
     - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh linux
 
+  buildOnWindows:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            name: x64
+          - arch: amd64_x86
+            name: x86
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1.9.0
+        with:
+          arch: ${{ matrix.arch }}
+      - run: git submodule update --init; cd hts_engine_API; nmake /f Makefile.mak hts_lib
+      - run: nmake /f Makefile.mak
+      - run: ren library\open_jtalk.dll ${{ matrix.name }}_open_jtalk.dll ; cp library\${{ matrix.name }}_open_jtalk.dll ${{ matrix.name }}_open_jtalk.dll
+
