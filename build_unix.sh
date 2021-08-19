@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]; then
+    echo "Usage: $(basename $0) [mac,linux]" >&2
+    exit 1
+fi
+
 # get submodules
 git submodule update --init
 
@@ -16,4 +21,8 @@ popd
 make -j4
 
 # build library
-make -C library mac_shared
+if [ $1 = "mac" ]; then
+    make -C library mac_shared
+elif [ $1 = "linux" ]; then
+    make -C library linux_shared
+fi
