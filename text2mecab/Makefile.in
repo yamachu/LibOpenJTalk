@@ -280,7 +280,7 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = Makefile.mak
 DISTCLEANFILES = *.log *.out *~
 MAINTAINERCLEANFILES = Makefile.in
-AM_CPPFLAGS = @CHARSET@
+AM_CPPFLAGS = @CHARSET@ -fPIC
 noinst_LIBRARIES = libtext2mecab.a
 libtext2mecab_a_SOURCES = text2mecab.h \
                           text2mecab.c \

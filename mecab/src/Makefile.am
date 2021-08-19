@@ -10,7 +10,8 @@ AM_CPPFLAGS = -D DIC_VERSION=@DIC_VERSION@ \
               -D MECAB_DEFAULT_RC="\"@MECAB_DEFAULT_RC@\"" \
               -D MECAB_DEFAULT_CHARSET="\"@MECAB_DEFAULT_CHARSET@\"" \
               -D PACKAGE="\"@PACKAGE@\"" \
-              -D VERSION="\"@VERSION@\""
+              -D VERSION="\"@VERSION@\"" \
+              -fPIC
 
 noinst_PROGRAMS = mecab-dict-index
 

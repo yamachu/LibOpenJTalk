@@ -280,7 +280,7 @@ top_srcdir = @top_srcdir@
 EXTRA_DIST = Makefile.mak
 DISTCLEANFILES = *.log *.out *~
 MAINTAINERCLEANFILES = Makefile.in
-AM_CPPFLAGS = -I @top_srcdir@/njd -I @top_srcdir@/jpcommon @CHARSET@
+AM_CPPFLAGS = -I @top_srcdir@/njd -I @top_srcdir@/jpcommon @CHARSET@ -fPIC
 noinst_LIBRARIES = libnjd2jpcommon.a
 libnjd2jpcommon_a_SOURCES = njd2jpcommon.h \
                             njd2jpcommon.c \

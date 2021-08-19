@@ -5,7 +5,7 @@ DISTCLEANFILES = *.log *.out *~
 
 MAINTAINERCLEANFILES = Makefile.in
 
-AM_CPPFLAGS = @CHARSET@
+AM_CPPFLAGS = @CHARSET@ -fPIC
 
 noinst_LIBRARIES = libnjd.a
 

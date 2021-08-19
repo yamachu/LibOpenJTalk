@@ -5,7 +5,7 @@ DISTCLEANFILES = *.log *.out *~
 
 MAINTAINERCLEANFILES = Makefile.in
 
-AM_CPPFLAGS = -I @top_srcdir@/njd
+AM_CPPFLAGS = -I @top_srcdir@/njd -fPIC
 
 noinst_LIBRARIES = libmecab2njd.a
 

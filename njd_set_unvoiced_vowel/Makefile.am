@@ -5,7 +5,7 @@ DISTCLEANFILES = *.log *.out *~
 
 MAINTAINERCLEANFILES = Makefile.in
 
-AM_CPPFLAGS = -I @top_srcdir@/njd @CHARSET@ -D ASCII_HEADER
+AM_CPPFLAGS = -I @top_srcdir@/njd @CHARSET@ -D ASCII_HEADER -fPIC
 
 noinst_LIBRARIES = libnjd_set_unvoiced_vowel.a
 
