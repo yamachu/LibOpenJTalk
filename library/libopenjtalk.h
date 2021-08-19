@@ -45,28 +45,9 @@ int Open_JTalk_synthesis_labels_u16(Open_JTalk * open_jtalk, char16_t *txt,
     char16_t *wav_file_path,
     char16_t *text_anal_file_path,
     char16_t *context_label_file_path);
-int Open_JTalk_synthesis_buffer_WORLD(Open_JTalk * open_jtalk, const char *txt,
-    short ** data);
-int Open_JTalk_synthesis_buffer_WORLD_u16(Open_JTalk * open_jtalk, char16_t *txt,
-    short ** data);
-int Open_JTalk_synthesis_WORLD(Open_JTalk * open_jtalk, const char *txt,
-    const char *wav_file_path, const char *log_file_path);
-int Open_JTalk_synthesis_WORLD_u16(Open_JTalk * open_jtalk, char16_t *txt,
-    char16_t *wav_file_path, char16_t *log_file_path);
-int Open_JTalk_synthesis_labels_WORLD(Open_JTalk * open_jtalk, const char *txt,
-    const char *wav_file_path,
-    const char *text_anal_file_path,
-    const char *context_label_file_path);
-int Open_JTalk_synthesis_labels_WORLD_u16(Open_JTalk * open_jtalk, char16_t *txt,
-    char16_t *wav_file_path,
-    char16_t *text_anal_file_path,
-    char16_t *context_label_file_path);
 int Open_JTalk_resynthesis_buffer(Open_JTalk * open_jtalk, short ** data);
 int Open_JTalk_resynthesis(Open_JTalk * open_jtalk, const char *wav_file_path);
 int Open_JTalk_resynthesis_u16(Open_JTalk * open_jtalk, char16_t *wav_file_path);
-int Open_JTalk_resynthesis_buffer_WORLD(Open_JTalk * open_jtalk, short ** data);
-int Open_JTalk_resynthesis_WORLD(Open_JTalk * open_jtalk, const char *wav_file_path);
-int Open_JTalk_resynthesis_WORLD_u16(Open_JTalk * open_jtalk, char16_t *wav_file_path);
 
 void Open_JTalk_set_sampling_frequency(Open_JTalk * open_jtalk, size_t i);
 void Open_JTalk_set_fperiod(Open_JTalk * open_jtalk, size_t i);

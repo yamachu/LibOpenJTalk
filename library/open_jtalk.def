@@ -12,18 +12,9 @@ EXPORTS
 	Open_JTalk_synthesis_u16 @9
 	Open_JTalk_synthesis_labels @10
 	Open_JTalk_synthesis_labels_u16 @11
-	Open_JTalk_synthesis_buffer_WORLD @12
-	Open_JTalk_synthesis_buffer_WORLD_u16 @13
-	Open_JTalk_synthesis_WORLD @14
-	Open_JTalk_synthesis_WORLD_u16 @15
-	Open_JTalk_synthesis_labels_WORLD @16
-	Open_JTalk_synthesis_labels_WORLD_u16 @17
 	Open_JTalk_resynthesis_buffer @18
 	Open_JTalk_resynthesis @19
 	Open_JTalk_resynthesis_u16 @20
-	Open_JTalk_resynthesis_buffer_WORLD @21
-	Open_JTalk_resynthesis_WORLD @22
-	Open_JTalk_resynthesis_WORLD_u16 @23
 	Open_JTalk_set_sampling_frequency @24
 	Open_JTalk_set_fperiod @25
 	Open_JTalk_set_alpha @26
