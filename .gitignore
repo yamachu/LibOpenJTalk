@@ -38,5 +38,6 @@ Makefile
 /config.log
 /config.status
 mecab/config.h
+bin/open_jtalk
 
 !library/Makefile
