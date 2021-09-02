@@ -14,7 +14,9 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: library/libopenjtalk.dylib
+        files: |
+          library/full/libopenjtalk.dylib
+          library/lang/libopenjtalk-lang.dylib
 
   buildOnLinux:
     runs-on: ubuntu-latest
@@ -27,7 +29,9 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
-        files: library/libopenjtalk.so
+        files: |
+          library/full/libopenjtalk.so
+          library/lang/libopenjtalk-lang.so
 
   buildOnWindows:
     runs-on: windows-latest
@@ -47,9 +51,12 @@ jobs:
           arch: ${{ matrix.arch }}
       - run: git submodule update --init; cd hts_engine_API; nmake /f Makefile.mak hts_lib
       - run: nmake /f Makefile.mak
-      - run: ren library\open_jtalk.dll ${{ matrix.name }}_open_jtalk.dll ; cp library\${{ matrix.name }}_open_jtalk.dll ${{ matrix.name }}_open_jtalk.dll
+      - run: ren library\full\open_jtalk.dll ${{ matrix.name }}_open_jtalk.dll ; cp library\full\${{ matrix.name }}_open_jtalk.dll ${{ matrix.name }}_open_jtalk.dll
+      - run: ren library\lang\open_jtalk_lang.dll ${{ matrix.name }}_open_jtalk_lang.dll ; cp library\lang\${{ matrix.name }}_open_jtalk_lang.dll ${{ matrix.name }}_open_jtalk_lang.dll
       - name: Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-          files: ${{ matrix.name }}_open_jtalk.dll
+          files: |
+            ${{ matrix.name }}_open_jtalk.dll
+            ${{ matrix.name }}_open_jtalk_lang.dll

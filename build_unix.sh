@@ -22,7 +22,9 @@ make -j4
 
 # build library
 if [ $1 = "mac" ]; then
-    make -C library mac_shared
+    make -C library/full mac_shared
+    make -C library/lang mac_shared
 elif [ $1 = "linux" ]; then
-    make -C library linux_shared
+    make -C library/full linux_shared
+    make -C library/lang linux_shared
 fi
