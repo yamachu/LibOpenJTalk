@@ -38,9 +38,12 @@ all:
 	cd jpcommon
 	nmake /f Makefile.mak
 	cd ..
-	cd library
+	cd library\full
 	nmake /f Makefile.mak
-	cd ..
+	cd ..\..
+	cd library\lang
+	nmake /f Makefile.mak
+	cd ..\..
 
 clean:
 	cd text2mecab

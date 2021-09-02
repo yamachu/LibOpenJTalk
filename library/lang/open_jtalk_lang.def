@@ -1,0 +1,9 @@
+LIBRARY open_jtalk_lang
+
+EXPORTS
+	Open_JTalk_initialize @1
+	Open_JTalk_clear @2
+	Open_JTalk_load @3
+	Open_JTalk_load_u16 @4
+	Open_JTalk_extract_label @5
+	Open_JTalk_extract_label_u16 @6
