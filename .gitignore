@@ -40,4 +40,4 @@ Makefile
 mecab/config.h
 bin/open_jtalk
 
-!library/Makefile
+!library/**/Makefile
