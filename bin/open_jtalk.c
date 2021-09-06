@@ -101,7 +101,7 @@ static void Open_JTalk_clear(Open_JTalk * open_jtalk)
 
 static int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab, char *fn_voice)
 {
-   if (Mecab_load(&open_jtalk->mecab, dn_mecab, NULL) != TRUE) {
+   if (Mecab_load(&open_jtalk->mecab, dn_mecab) != TRUE) {
       Open_JTalk_clear(open_jtalk);
       return 0;
    }
