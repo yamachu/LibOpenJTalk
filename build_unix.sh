@@ -18,7 +18,7 @@ popd
 
 # build OpenJTalk
 ./configure --with-hts-engine-header-path=`pwd`/hts_engine_API/include --with-hts-engine-library-path=`pwd`/hts_engine_API/lib --with-charset=UTF-8
-make -j
+make -j4
 
 # build library
 if [ $1 = "mac" ]; then

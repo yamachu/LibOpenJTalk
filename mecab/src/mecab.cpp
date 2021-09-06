@@ -74,7 +74,7 @@ BOOL Mecab_initialize(Mecab *m)
    return TRUE;
 }
 
-BOOL Mecab_load(Mecab *m, const char *dicdir, const char *usrdicdir)
+BOOL Mecab_load(Mecab *m, const char *dicdir)
 {
    int i;
    int argc = 3;
@@ -88,16 +88,11 @@ BOOL Mecab_load(Mecab *m, const char *dicdir, const char *usrdicdir)
 
    Mecab_clear(m);
 
-   argv = (char **) malloc(sizeof(char *) * (usrdicdir == NULL ? argc : argc + 2));
+   argv = (char **) malloc(sizeof(char *) * argc);
 
    argv[0] = strdup("mecab");
    argv[1] = strdup("-d");
    argv[2] = strdup(dicdir);
-   if (usrdicdir != NULL)
-   {
-      argv[3] = strdup("-u");
-      argv[4] = strdup(usrdicdir);
-   }
 
    MeCab::Model *model = MeCab::createModel(argc, argv);
 
