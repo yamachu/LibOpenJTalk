@@ -22,8 +22,8 @@ typedef struct _Open_JTalk {
 
 Open_JTalk* Open_JTalk_initialize();
 void Open_JTalk_clear(Open_JTalk **);
-int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab, char *fn_voice, char *dn_user = NULL);
-int Open_JTalk_load_u16(Open_JTalk * open_jtalk, char16_t *dn_mecab, char16_t *fn_voice, char16_t *dn_user = NULL);
+int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab, char *fn_voice, char *dn_user);
+int Open_JTalk_load_u16(Open_JTalk * open_jtalk, char16_t *dn_mecab, char16_t *fn_voice, char16_t *dn_user);
 void Open_JTalk_destroy_buffer(Open_JTalk * open_jtalk, short ** data);
 int Open_JTalk_synthesis_buffer(Open_JTalk * open_jtalk, const char *txt,
     short ** data);
