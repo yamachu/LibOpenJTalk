@@ -88,7 +88,8 @@ BOOL Mecab_load(Mecab *m, const char *dicdir, const char *usrdicdir)
 
    Mecab_clear(m);
 
-   argv = (char **) malloc(sizeof(char *) * (usrdicdir == NULL ? argc : argc + 2));
+   argc = usrdicdir == NULL ? argc : argc + 2;
+   argv = (char **) malloc(sizeof(char *) * argc);
 
    argv[0] = strdup("mecab");
    argv[1] = strdup("-d");
