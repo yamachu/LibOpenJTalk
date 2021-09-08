@@ -52,22 +52,29 @@ void Open_JTalk_clear(Open_JTalk **open_jtalk)
     free(*open_jtalk);
 }
 
-int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab)
+int Open_JTalk_load(Open_JTalk * open_jtalk, char *dn_mecab, char *dn_user)
 {
-    if (Mecab_load(&open_jtalk->mecab, dn_mecab) != TRUE) {
+    if (Mecab_load(&open_jtalk->mecab, dn_mecab, dn_user) != TRUE) {
         Open_JTalk_clear(&open_jtalk);
         return 0;
     }
     return 1;
 }
 
-int Open_JTalk_load_u16(Open_JTalk * open_jtalk, char16_t *dn_mecab)
+int Open_JTalk_load_u16(Open_JTalk * open_jtalk, char16_t *dn_mecab, char16_t *dn_user)
 {
     std::string mecab_str = conv_u16_u8(dn_mecab);
     const char *mecab_str_c = mecab_str.c_str();
     char *mecab = const_cast<char*>(mecab_str_c);
+    if (dn_user == NULL)
+    {
+        return Open_JTalk_load(open_jtalk, mecab, NULL);
+    }
 
-    return Open_JTalk_load(open_jtalk, mecab);
+    std::string user_dic_str = conv_u16_u8(dn_user);
+    const char *user_dic_str_c = user_dic_str.c_str();
+    char *user_dic = const_cast<char*>(user_dic_str_c);
+    return Open_JTalk_load(open_jtalk, mecab, user_dic);
 }
 
 int Open_JTalk_extract_label(Open_JTalk * open_jtalk, const char *txt,
