@@ -1597,6 +1597,7 @@ int Mecab_get_size(Mecab *m);
 char **Mecab_get_feature(Mecab *m);
 BOOL Mecab_refresh(Mecab *m);
 BOOL Mecab_clear(Mecab *m);
+BOOL Mecab_dict_gen(const char *dicdir, const char *usrdiccsv, const char *usrdicpath);
 
 MECAB_H_END;
 
