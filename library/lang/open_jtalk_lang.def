@@ -7,3 +7,5 @@ EXPORTS
 	Open_JTalk_load_u16 @4
 	Open_JTalk_extract_label @5
 	Open_JTalk_extract_label_u16 @6
+	Open_JTalk_dict_gen @7
+	Open_JTalk_dict_gen_u16 @8

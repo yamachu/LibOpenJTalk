@@ -26,6 +26,8 @@ int Open_JTalk_extract_label(Open_JTalk * open_jtalk, const char *txt,
     char ***labels, int *labelLength);
 int Open_JTalk_extract_label_u16(Open_JTalk * open_jtalk, char16_t *txt,
     char ***labels, int *labelLength);
+int Open_JTalk_dict_gen(const char *dicdir, const char *usrdiccsv, const char *usrdicpath);
+int Open_JTalk_dict_gen_u16(char16_t *dicdir, char16_t *usrdiccsv, char16_t *usrdicpath);
 
 #ifdef __cplusplus
 }

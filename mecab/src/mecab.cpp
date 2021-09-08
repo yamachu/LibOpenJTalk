@@ -235,6 +235,34 @@ BOOL Mecab_clear(Mecab *m)
    return TRUE;
 }
 
+BOOL Mecab_dict_gen(const char *dicdir, const char *usrdiccsv, const char *usrdicpath)
+{
+   int i;
+   int argc = 10;
+   char **argv;
+
+   argv = (char **) malloc(sizeof(char *) * argc);
+
+   argv[0] = strdup("mecab-dict-index");
+   argv[1] = strdup("-d");
+   argv[2] = strdup(dicdir);
+   argv[3] = strdup("-u");
+   argv[4] = strdup(usrdicpath);
+   argv[5] = strdup("-t");
+   argv[6] = strdup("utf-8");
+   argv[7] = strdup("-f");
+   argv[8] = strdup("utf-8");
+   argv[9] = strdup(usrdiccsv);
+
+   int result = mecab_dict_index(argc, argv);
+
+   for(i = 0; i < argc; i++)
+      free(argv[i]);
+   free(argv);
+   
+   return result == 0;
+}
+
 MECAB_CPP_END;
 
 #endif                          /* !MECAB_CPP */
