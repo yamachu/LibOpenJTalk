@@ -418,6 +418,16 @@ int Open_JTalk_resynthesis_u16(Open_JTalk * open_jtalk, char16_t *wav_file_path)
     return Open_JTalk_resynthesis(open_jtalk, conv_u16_u8(wav_file_path).c_str());
 }
 
+int Open_JTalk_dict_gen(const char *dicdir, const char *usrdiccsv, const char *usrdicpath)
+{
+    return Mecab_dict_gen(dicdir, usrdiccsv, usrdicpath);
+}
+
+int Open_JTalk_dict_gen_u16(char16_t *dicdir, char16_t *usrdiccsv, char16_t *usrdicpath)
+{
+    return Open_JTalk_dict_gen(conv_u16_u8(dicdir).c_str(), conv_u16_u8(usrdiccsv).c_str(), conv_u16_u8(usrdicpath).c_str());
+}
+
 int Open_JTalk_get_lf0_length(Open_JTalk * open_jtalk)
 {
     return HTS_Engine_get_total_frame(&open_jtalk->engine);

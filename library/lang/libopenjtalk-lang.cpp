@@ -122,3 +122,13 @@ int Open_JTalk_extract_label_u16(Open_JTalk * open_jtalk, char16_t *txt,
     return Open_JTalk_extract_label(open_jtalk, conv_u16_u8(txt).c_str(),
         labels, labelLength);
 }
+
+int Open_JTalk_dict_gen(const char *dicdir, const char *usrdiccsv, const char *usrdicpath)
+{
+    return Mecab_dict_gen(dicdir, usrdiccsv, usrdicpath);
+}
+
+int Open_JTalk_dict_gen_u16(char16_t *dicdir, char16_t *usrdiccsv, char16_t *usrdicpath)
+{
+    return Open_JTalk_dict_gen(conv_u16_u8(dicdir).c_str(), conv_u16_u8(usrdiccsv).c_str(), conv_u16_u8(usrdicpath).c_str());
+}

@@ -48,6 +48,8 @@ int Open_JTalk_synthesis_labels_u16(Open_JTalk * open_jtalk, char16_t *txt,
 int Open_JTalk_resynthesis_buffer(Open_JTalk * open_jtalk, short ** data);
 int Open_JTalk_resynthesis(Open_JTalk * open_jtalk, const char *wav_file_path);
 int Open_JTalk_resynthesis_u16(Open_JTalk * open_jtalk, char16_t *wav_file_path);
+int Open_JTalk_dict_gen(const char *dicdir, const char *usrdiccsv, const char *usrdicpath);
+int Open_JTalk_dict_gen_u16(char16_t *dicdir, char16_t *usrdiccsv, char16_t *usrdicpath);
 
 void Open_JTalk_set_sampling_frequency(Open_JTalk * open_jtalk, size_t i);
 void Open_JTalk_set_fperiod(Open_JTalk * open_jtalk, size_t i);
