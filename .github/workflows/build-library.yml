@@ -86,5 +86,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          library/full/libopenjtalk.so
-          library/lang/libopenjtalk-lang.so
+          library/full/wasm-libopenjtalk.a
+          library/lang/wasm-libopenjtalk-lang.a
