@@ -70,6 +70,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - name: Setup cache
       id: cache-system-libraries
       uses: actions/cache@v2
