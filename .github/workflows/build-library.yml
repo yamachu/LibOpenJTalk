@@ -66,11 +66,11 @@ jobs:
             ${{ matrix.name }}_open_jtalk_lang.dll
 
   buildWasm:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
-    - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
+    - run: curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && make install
     - name: Setup cache
       id: cache-system-libraries
       uses: actions/cache@v2
