@@ -48,6 +48,11 @@ linux_shared: libopenjtalk-lang.so
 libopenjtalk-lang.so: libopenjtalk-lang.o
 	$(LINK) $(CXXFLAGS) $(LDFLAGS) -Wl,--whole-archive $(LIBS) -shared -o "$@" "$<" -Wl,--no-whole-archive
 
+wasm_static: wasm-libopenjtalk-lang.a
+
+wasm-libopenjtalk-lang.a: libopenjtalk-lang.o
+	$(AR) $(ARFLAGS) "$@" $(LIBS) "$<"
+
 clean:
 	$(RM) libopenjtalk-lang.o
 

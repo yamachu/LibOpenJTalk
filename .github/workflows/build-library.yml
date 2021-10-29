@@ -2,6 +2,10 @@ name: Build Library
 
 on: [push]
 
+env:
+  EM_VERSION: 2.0.23
+  EM_CACHE_FOLDER: 'emsdk-cache'
+
 jobs:
   buildOnMac:
     runs-on: macos-latest
@@ -60,3 +64,27 @@ jobs:
           files: |
             ${{ matrix.name }}_open_jtalk.dll
             ${{ matrix.name }}_open_jtalk_lang.dll
+
+  buildWasm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup cache
+      id: cache-system-libraries
+      uses: actions/cache@v2
+      with:
+        path: ${{env.EM_CACHE_FOLDER}}
+        key: ${{env.EM_VERSION}}-${{ runner.os }}
+    - uses: mymindstorm/setup-emsdk@v10
+      with:
+        version: ${{env.EM_VERSION}}
+        actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
+    - run: chmod +x ./build_wasm.sh && . ./build_wasm.sh
+    - name: Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          library/full/wasm-libopenjtalk.a
+          library/lang/wasm-libopenjtalk-lang.a
