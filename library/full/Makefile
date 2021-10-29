@@ -2,6 +2,7 @@ CXX = g++
 LINK = g++
 CXXFLAGS = -O2 -Wall -finput-charset=UTF-8 -fexec-charset=UTF-8
 LDFLAGS = -lstdc++ -lm
+ARFLAGS = -cr
 INCLUDE = \
     -I ../../mecab \
     -I ../../text2mecab \
@@ -53,7 +54,8 @@ libopenjtalk.so: libopenjtalk.o
 wasm_static: wasm-libopenjtalk.a
 
 wasm-libopenjtalk.a: libopenjtalk.o
-	$(AR) $(ARFLAGS) "$@" $(LIBS) "$<"
+	$(LINK) $(CXXFLAGS) $(LDFLAGS) -r -o libs.o -Wl,--whole-archive $(LIBS)
+	$(AR) $(ARFLAGS) "$@" "$<" libs.o
 
 clean:
 	$(RM) libopenjtalk.o
