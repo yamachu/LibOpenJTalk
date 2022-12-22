@@ -31,7 +31,7 @@ popd
 
 # build OpenJTalk
 ./configure --with-hts-engine-header-path=`pwd`/hts_engine_API/include --with-hts-engine-library-path=`pwd`/hts_engine_API/lib --with-charset=UTF-8 --host $TARGET
-make -j
+make -j || : # ここはCrossBuildの弊害で、実行できないバイナリを吐き出してしまって落ちるので、失敗を無視している
 
 # build library
 make -C library/full linux_shared CXX=$CXX LINK=$CXX AR=$AR
