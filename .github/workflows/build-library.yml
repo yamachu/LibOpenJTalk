@@ -90,3 +90,36 @@ jobs:
         files: |
           library/full/wasm-libopenjtalk.a
           library/lang/wasm-libopenjtalk-lang.a
+
+  buildAndroid:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        include:
+          - arch: aarch64-linux-android
+          - arch: armv7a-linux-androideabi
+          - arch: i686-linux-android
+          - arch: x86_64-linux-android
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
+    - uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r21e
+        add-to-path: false
+    - run: ls -al ${ANDROID_NDK_HOME}/**
+      env:
+        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+    - run: . ./build_android.sh
+      env:
+        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+    - name: Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          library/full/libopenjtalk.so
+          library/lang/libopenjtalk-lang.so
