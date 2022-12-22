@@ -113,7 +113,7 @@ jobs:
     - run: ls -al ${ANDROID_NDK_HOME}/**
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-    - run: . ./build_android.sh
+    - run: . ./build_android.sh ${{ matrix.arch }}
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
     - name: Release
