@@ -36,3 +36,6 @@ make -j || : # ここはCrossBuildの弊害で、実行できないバイナリ�
 # build library
 make -C library/full linux_shared CXX=$CXX LINK=$CXX AR=$AR
 make -C library/lang linux_shared CXX=$CXX LINK=$CXX AR=$AR
+
+mv library/full/libopenjtalk.so library/full/${TARGET}-libopenjtalk.so
+mv library/lang/libopenjtalk-lang.so library/lang/${TARGET}-libopenjtalk-lang.so

@@ -121,5 +121,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          library/full/libopenjtalk.so
-          library/lang/libopenjtalk-lang.so
+          library/full/${{ matrix.arch }}-libopenjtalk.so
+          library/lang/${{ matrix.arch }}-libopenjtalk-lang.so
