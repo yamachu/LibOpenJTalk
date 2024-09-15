@@ -56,7 +56,7 @@ wasm-libopenjtalk-lang.a: libopenjtalk-lang.o
 	$(AR) $(ARFLAGS) "$@" "$<" libs.o
 
 clean:
-	$(RM) libopenjtalk-lang.o
+	-$(RM) libopenjtalk-lang.o libopenjtalk-lang.dylib libopenjtalk-lang.so wasm-libopenjtalk-lang.a
 
 .PHONY: clean all libobj
 .DELETE_ON_ERRORS:
