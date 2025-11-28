@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    - run: brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/c679306cc10018711fc3f16d46b3392909601e9b/Formula/automake.rb
+    - run: curl https://raw.githubusercontent.com/Homebrew/homebrew-core/c679306cc10018711fc3f16d46b3392909601e9b/Formula/automake.rb -o automake.rb && brew install -s automake.rb
     - run: brew install autoconf
     # - run: curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh mac
