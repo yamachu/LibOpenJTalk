@@ -85,9 +85,9 @@ clean:
 	cd bin
 	nmake /f Makefile.mak clean
 	cd ..
-	cd mecab-naist-jdic
-	nmake /f Makefile.mak clean
-	cd ..
+# 	cd mecab-naist-jdic
+# 	nmake /f Makefile.mak clean
+# 	cd ..
 
 install::
 	@if not exist "$(INSTALLDIR)\bin" mkdir "$(INSTALLDIR)\bin"
