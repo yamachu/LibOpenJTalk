@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - run: curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh mac
     - name: Release
@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh linux
     - name: Release
@@ -49,7 +49,7 @@ jobs:
             name: x86
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - uses: ilammy/msvc-dev-cmd@v1.9.0
         with:
           arch: ${{ matrix.arch }}
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - name: Setup cache
       id: cache-system-libraries
@@ -103,7 +103,7 @@ jobs:
           - arch: x86_64-linux-android
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - uses: nttld/setup-ndk@v1
       id: setup-ndk
