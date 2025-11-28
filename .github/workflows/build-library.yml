@@ -7,20 +7,31 @@ env:
 
 jobs:
   buildOnMac:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: macos-13
+            arch: x64
+          - os: macos-latest
+            arch: arm64
 
     steps:
     - uses: actions/checkout@v6
     - run: brew install autoconf
     - run: curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh mac
+    - run: |
+        mv library/full/libopenjtalk.dylib library/full/${{ matrix.arch }}-libopenjtalk.dylib
+        mv library/lang/libopenjtalk-lang.dylib library/lang/${{ matrix.arch }}-libopenjtalk-lang.dylib
     - name: Release
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          library/full/libopenjtalk.dylib
-          library/lang/libopenjtalk-lang.dylib
+          library/full/${{ matrix.arch }}-libopenjtalk.dylib
+          library/lang/${{ matrix.arch }}-libopenjtalk-lang.dylib
 
   buildOnLinux:
     runs-on: ubuntu-latest
