@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - run: brew install autoconf
-    - run: curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
+    - run: curl -O -L https://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh mac
     - run: |
         mv library/full/libopenjtalk.dylib library/full/${{ matrix.arch }}-libopenjtalk.dylib
@@ -46,7 +46,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
+    - run: sudo apt-get install csh -y && curl -O -L https://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - run: chmod +x ./build_unix.sh && . ./build_unix.sh linux
     - run: |
         mv library/full/libopenjtalk.so library/full/${{ matrix.arch }}-libopenjtalk.so
@@ -95,7 +95,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
+    - run: sudo apt-get install csh -y && curl -O -L https://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - name: Setup cache
       id: cache-system-libraries
       uses: actions/cache@v4
@@ -132,7 +132,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    - run: sudo apt-get install csh -y && curl -O -L http://ftpmirror.gnu.org/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
+    - run: sudo apt-get install csh -y && curl -O -L https://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz && tar -zxf automake-1.15.tar.gz && cd automake-1.15 && ./configure && make && sudo make install
     - uses: nttld/setup-ndk@v1
       id: setup-ndk
       with:
